@@ -10,7 +10,7 @@ public class CPUTaskDemo {
     private static final int TASK_COUNT = Runtime.getRuntime().availableProcessors() * 3;
 
     public static void main() {
-        demo(Thread.ofVirtual());
+        demo(Thread.ofPlatform());
     }
 
     private static void demo(Thread.Builder threadBuilder) {
