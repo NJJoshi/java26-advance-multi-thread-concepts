@@ -1,13 +1,12 @@
 package com.nj.virtualthread.learning.sec01;
 
-import com.nj.virtualthread.learning.VirtualThreadApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 
 public class Task {
-    private static final Logger LOG = LoggerFactory.getLogger(VirtualThreadApplication.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Task.class);
 
     public static void ioIntensive(int i) {
         LOG.info("Start IO Intensive Task {}:{}", i, Thread.currentThread());
