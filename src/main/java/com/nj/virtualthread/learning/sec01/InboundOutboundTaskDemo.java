@@ -3,16 +3,17 @@ package com.nj.virtualthread.learning.sec01;
 import java.util.concurrent.CountDownLatch;
 
 public class InboundOutboundTaskDemo {
-    private static final int MAX_PLATFORM_THREADS = 9;
-    private static final int MAX_VIRTUAL_THREADS = 9;
+    private static final int MAX_PLATFORM_THREADS = 8;
+    private static final int MAX_VIRTUAL_THREADS = 32;
 
-    static void main(String[] args) {
-//        platformThreadDemo2();
+    static void main(String[] args) throws InterruptedException {
+//        platformThreadDemo1();
 //        try {
 //            platformThreadDemo3();
 //        } catch (InterruptedException e) {
 //            throw new RuntimeException(e);
 //        }
+
         virtualThreadDemo1();
     }
 
@@ -74,15 +75,18 @@ public class InboundOutboundTaskDemo {
      * Virtual threads are Daemon thread by default, so we don't need to specify it explicitly.
      *
      */
-    private static void virtualThreadDemo1() {
+    private static void virtualThreadDemo1() throws InterruptedException {
+        var countDownLatch = new CountDownLatch(MAX_VIRTUAL_THREADS);
         var builder =
                 Thread.ofVirtual().name("NJ-Virtual Thread-", 1);
         for (int i = 0; i < MAX_VIRTUAL_THREADS; i++) {
             int j = i;
             Thread thread =builder.unstarted(() -> {
                 Task.ioIntensive(j);
+                countDownLatch.countDown();
             });
             thread.start();
         }
+        countDownLatch.await();
     }
 }
