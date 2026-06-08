@@ -1,13 +1,13 @@
 package com.nj.virtualthread.learning;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@SpringBootApplication
 public class VirtualThreadApplication {
-
+    private static final Logger LOG = LoggerFactory.getLogger(VirtualThreadApplication.class);
     public static void main(String[] args) {
-        SpringApplication.run(VirtualThreadApplication.class, args);
+        LOG.info("Starting Virtual Thread Application");
+        LOG.info("End Virtual Thread Application");
     }
 
 }
