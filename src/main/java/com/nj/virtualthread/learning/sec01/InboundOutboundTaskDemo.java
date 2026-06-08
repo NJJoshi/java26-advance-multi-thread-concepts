@@ -14,6 +14,9 @@ public class InboundOutboundTaskDemo {
         }
     }
 
+    /**
+     * Create basic traditional way to create thread(s). With Modern JDK, Its called Platform Thread
+     */
     private static void platformThreadDemo1() {
        for (int i = 0; i < MAX_PLATFORM_THREADS; i++) {
            int j = i;
@@ -23,6 +26,12 @@ public class InboundOutboundTaskDemo {
            thread.start();
        }
     }
+
+    /**
+     *
+     * Create Platform thread using Thread.Builder.
+     *
+     */
     private static void platformThreadDemo2() {
         var builder =
                 Thread.ofPlatform().name("NJ-Platform Thread-", 1);
@@ -34,6 +43,13 @@ public class InboundOutboundTaskDemo {
            thread.start();
        }
     }
+
+    /**
+     *
+     * Create Platform Daemon thread using Thread.Builder and waited for its completion using CountDownLatch class
+     *
+     * @throws InterruptedException
+     */
     private static void platformThreadDemo3() throws InterruptedException {
         var latch = new CountDownLatch(MAX_PLATFORM_THREADS);
 
