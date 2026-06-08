@@ -27,6 +27,7 @@ public class CooperativeSchedulingDemo {
         log.info("Starting " + threadNumber + " thread");
         for (int i = 0; i < 10; i++) {
             log.info(" Printing {} by thread-{}. Thread :{}",i, threadNumber, Thread.currentThread());
+            Thread.yield();
         }
         log.info("Done " + threadNumber + " thread");
     }
