@@ -4,14 +4,16 @@ import java.util.concurrent.CountDownLatch;
 
 public class InboundOutboundTaskDemo {
     private static final int MAX_PLATFORM_THREADS = 9;
+    private static final int MAX_VIRTUAL_THREADS = 9;
 
     static void main(String[] args) {
 //        platformThreadDemo2();
-        try {
-            platformThreadDemo3();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            platformThreadDemo3();
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+        virtualThreadDemo1();
     }
 
     /**
@@ -64,5 +66,23 @@ public class InboundOutboundTaskDemo {
            thread.start();
        }
        latch.await();
+    }
+
+    /**
+     *
+     * Create Virtual thread using Thread.Builder.
+     * Virtual threads are Daemon thread by default, so we don't need to specify it explicitly.
+     *
+     */
+    private static void virtualThreadDemo1() {
+        var builder =
+                Thread.ofVirtual().name("NJ-Virtual Thread-", 1);
+        for (int i = 0; i < MAX_VIRTUAL_THREADS; i++) {
+            int j = i;
+            Thread thread =builder.unstarted(() -> {
+                Task.ioIntensive(j);
+            });
+            thread.start();
+        }
     }
 }
