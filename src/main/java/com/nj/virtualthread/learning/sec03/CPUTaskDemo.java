@@ -10,7 +10,18 @@ public class CPUTaskDemo {
     private static final int TASK_COUNT = Runtime.getRuntime().availableProcessors() * 3;
 
     public static void main() {
-        demo(Thread.ofPlatform());
+
+        for (int i = 0; i < 3; i++) {
+            var totalTimetaken = CommonUtils.timer(() -> {
+                demo(Thread.ofPlatform());
+            });
+            LOG.info("Total time taken with Platform Thread : " + totalTimetaken);
+            totalTimetaken = CommonUtils.timer(() -> {
+                demo(Thread.ofVirtual());
+            });
+            LOG.info("Total time taken with Virtual Thread : " + totalTimetaken);
+        }
+
     }
 
     private static void demo(Thread.Builder threadBuilder) {

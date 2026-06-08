@@ -8,12 +8,12 @@ public class Task {
     private static final Logger LOG = LoggerFactory.getLogger(Task.class);
 
     public static void cpuIntensive(int i) {
-        LOG.info("Starting CPU Task. Thread info: {}", Thread.currentThread());
+//        LOG.info("Starting CPU Task. Thread info: {}", Thread.currentThread());
         var timeTaken = CommonUtils.timer(() -> {
             long fib = findFib(i);
-            LOG.info("{}th Fibonacci number: {}", i, fib);
+//            LOG.info("{}th Fibonacci number: {}", i, fib);
         });
-        LOG.info("Time taken to execute CPU Task: {} ms", timeTaken);
+//        LOG.info("Time taken to execute CPU Task: {} ms", timeTaken);
     }
 
     // 2 ^ N algorithm - to keep CPU busy, we have intentionally used it.
