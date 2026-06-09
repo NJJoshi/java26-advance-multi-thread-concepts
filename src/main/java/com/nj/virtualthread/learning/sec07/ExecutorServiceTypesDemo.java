@@ -12,11 +12,31 @@ public class ExecutorServiceTypesDemo {
     private static final Logger LOG = org.slf4j.LoggerFactory.getLogger(ExecutorServiceTypesDemo.class);
 
     static void main() {
-//        execute(Executors.newSingleThreadExecutor(), 3);
-//        execute(Executors.newFixedThreadPool(5), 10);
-//        execute(Executors.newCachedThreadPool(), 200);
-//        execute(Executors.newVirtualThreadPerTaskExecutor(), 200);
+//        single();
+//        fixed();
+//        cached();
+//        virtual();
         scheduled();
+    }
+
+    // single thread executor - to execute tasks sequentially
+    private static void single(){
+        execute(Executors.newSingleThreadExecutor(), 3);
+    }
+
+    // fixed thread pool
+    private static void fixed(){
+        execute(Executors.newFixedThreadPool(5), 20);
+    }
+
+    // elastic thread pool
+    private static void cached(){
+        execute(Executors.newCachedThreadPool(), 200);
+    }
+
+    // ExecutorService which creates VirtualThread per task
+    private static void virtual(){
+        execute(Executors.newVirtualThreadPerTaskExecutor(), 10_000);
     }
 
     private static void scheduled() {
