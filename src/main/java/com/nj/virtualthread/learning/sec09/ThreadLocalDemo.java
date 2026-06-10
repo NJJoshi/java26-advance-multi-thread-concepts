@@ -1,17 +1,38 @@
 package com.nj.virtualthread.learning.sec09;
 
+import com.nj.virtualthread.learning.util.CommonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
 
 public class ThreadLocalDemo {
     private static final Logger  logger = LoggerFactory.getLogger(ThreadLocalDemo.class);
     private static final ThreadLocal<String> sessionHolder =  new ThreadLocal<>();
 
-    static void main() {
+    static void main() throws ExecutionException, InterruptedException {
+//        authFilter(ThreadLocalDemo::orderController);
+//        authFilter(ThreadLocalDemo::orderController);
+//        Thread.ofVirtual().name("request-",1).start(() -> authFilter(ThreadLocalDemo::orderController));
+//        Thread.ofVirtual().name("request-",2).start(() -> authFilter(ThreadLocalDemo::orderController));
+//        CommonUtils.sleep(Duration.ofSeconds(5));
+
+        try(var executorService = Executors.newVirtualThreadPerTaskExecutor()) {
+            var request1 = CompletableFuture.supplyAsync(ThreadLocalDemo::callAPI, executorService);
+            var request2 = CompletableFuture.supplyAsync(ThreadLocalDemo::callAPI, executorService);
+
+            logger.info("Request 1: {}",  request1.get());
+            logger.info("Request 2: {}",  request2.get());
+        }
+    }
+
+    private static String callAPI(){
         authFilter(ThreadLocalDemo::orderController);
-        authFilter(ThreadLocalDemo::orderController);
+        return sessionHolder.get();
     }
 
     private static void authFilter(Runnable runnable){
