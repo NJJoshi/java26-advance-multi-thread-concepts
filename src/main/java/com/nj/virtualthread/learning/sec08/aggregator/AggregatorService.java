@@ -18,11 +18,11 @@ public class AggregatorService {
     public ProductDto getProductDto(int id) throws Exception {
         var product = CompletableFuture.supplyAsync(() -> Client.getProduct(id),  executorService)
                                         .exceptionally(x -> "Unknown")
-                                        .orTimeout(750, TimeUnit.MICROSECONDS)
+                                        .orTimeout(750, TimeUnit.SECONDS)
                                         .exceptionally(x -> "Service Timeout");
         var rating = CompletableFuture.supplyAsync(() -> Client.getRating(id), executorService)
                                       .exceptionally(x -> -1)
-                                        .orTimeout(750, TimeUnit.MICROSECONDS)
+                                        .orTimeout(750, TimeUnit.SECONDS)
                                         .exceptionally(x -> 408);
         return new ProductDto(id, product.get(), rating.get());
     }
